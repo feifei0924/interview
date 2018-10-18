@@ -42,7 +42,7 @@
 
   通过Demo实现一对一视频通话，使用Google提供的公共STUN服务器获取即将建立TCP连接的IP地址和端口号，使用Scaledrone建立信令。通信流程：两个客户端之间通过自己的公网IP地址，使用STUN协议信息和STUN服务器建立联系；通过SDP提供/应答机制，使用呼叫控制信令消息交换它们已发现的公共IP地址；执行连接检查，确保P2P可以连接；建立连接后，实时通信。
  
--**HTML部分：**
+- **HTML部分：**
 主要是创建了两个video元素，一个显示本地产生的视频流，为了听见远程视频声音，本地音频元素设置为静音，一个显示对等端传输的视频。
 
 ```
@@ -51,11 +51,11 @@
   <video id="remoteVideo" autoplay></video> 
 ```
  
--**Scaledrone信令部分：**
+- **Scaledrone信令部分：**
   链接进入Scaledrone之后，加入一个专属频道的房间内，信息只在房间内传递。房间有个members事件，会告知房间内成员信息（设置当成员超过两人以上弹窗告知房间已满）
   如果当前用户是房间第一人的时候，启动WebRTC代码，生成本地音频，视频流并显示出来，之后等待别的用户申请加入的信息并回答；若当前用户是房间第二人的时候，音频视频流同第一人操作相同，不同的是第二人将发送offer 给房间第一个成员，并触发onicecandidate 事件发送信令信息。
  
--**WebRTC部分：**
+- **WebRTC部分：**
   每一个客户端都要完成WebRTC的流程：
     获取本地的音频，视频流并添加到MediaStream中，准备发送给对等端。创建一个指定icesever的RTCPeerConnection对象。建立一个icecandidate事件的回调函数，发生该事件时将ICE候选路径消息封装在candidate通过信令通道发送给即将连接的对等端，对等端收到ICE candidate信令之后通过addIceCandidate()将其加入到本端PC实例中。建立一个track事件的响应程序，这个事件会在远程端添加一个track RTCPeerConnection对象到其MediaStream上时被触发，本地获取远程媒体流并显示在页面上。之后通过offer/answer 信令和icecandidate 信令传给对等端。信息交互之后，两端都有自己和对方的SDP信息和网络地址，这样双方就能建立端对端连接，向连接对象添加媒体流，连接对象就能读出媒体流并显示出来。
 
