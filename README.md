@@ -40,7 +40,7 @@
 - **HTML部分：**
 主要是创建了两个video元素，一个显示本地产生的视频流，为了听见远程视频声音，本地音频元素设置为静音，一个显示对等端传输的视频。
 
-```
+```html
   <div class="copy">Send your URL to a friend to start a video call</div>
   <video id="localVideo" autoplay muted></video>
   <video id="remoteVideo" autoplay></video> 
@@ -50,9 +50,8 @@
   链接进入Scaledrone之后，加入一个专属频道的房间内，信息只在房间内传递。房间有个members事件，会告知房间内成员信息（设置当成员超过两人以上弹窗告知房间已满）。如果当前用户是房间第一人的时候，启动WebRTC代码，生成本地音频，视频流并显示出来，之后等待别的用户申请加入的信息并回答；若当前用户是房间第二人的时候，音频视频流同第一人操作相同，不同的是第二人将发送offer 给房间第一个成员，并触发onicecandidate 事件发送信令信息。
   
   
+Scaledrone 部分代码
 ```JS
-// Scaledrone 部分代码
-
 // Scaledrone的一个实例建立了一个连接，连接到一个频道
 // CYBEREITS Channel ID ：AIEjzcTbyzUcnOWo
 const drone = new ScaleDrone('AIEjzcTbyzUcnOWo');
@@ -84,9 +83,9 @@ room.on('members', members => {
   
 　　获取本地的音频，视频流并添加到MediaStream中，准备发送给对等端。创建一个指定icesever的RTCPeerConnection对象。建立一个icecandidate事件的回调函数，发生该事件时将ICE候选路径消息封装在candidate通过信令通道发送给即将连接的对等端，对等端收到ICE candidate信令之后通过addIceCandidate()将其加入到本端PC实例中。建立一个track事件的响应程序，这个事件会在远程端添加一个track RTCPeerConnection对象到其MediaStream上时被触发，本地获取远程媒体流并显示在页面上。之后通过offer/answer 信令和icecandidate 信令传给对等端。信息交互之后，两端都有自己和对方的SDP信息和网络地址，这样双方就能建立端对端连接，向连接对象添加媒体流，连接对象就能读出媒体流并显示出来。
 
-``` js
-// JavaScript 部分代码
 
+JavaScript 部分代码：
+``` js
 // Scaledrone的一个实例建立了一个连接，连接到一个频道
 // CYBEREITS Channel ID ：AIEjzcTbyzUcnOWo
 const drone = new ScaleDrone('AIEjzcTbyzUcnOWo');
