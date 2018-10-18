@@ -2,9 +2,9 @@
 
 > author: yufei123@kakamf.com
 
-## WebRTC简要介绍
+## 一、WebRTC简要介绍
 
-**WebRTC目的是通过一系列的协议和规范来让浏览器提供支持实时通讯功能的API接口。**
+###WebRTC目的是通过一系列的协议和规范来让浏览器提供支持实时通讯功能的API接口。
 它允许客户端之间可以不借助中间媒介的情况下，建立点对点的连接，实现视频流和音频流或者其他任意数据的传输 。WebRTC提供了浏览器端的P2P通信，但并不意味着WebRTC不需要服务器，至少以下两种服务器是必须的：
 
 　　**浏览器之间建立通信前交换各种元数据（信令）的服务器（信令服务）：**
@@ -33,7 +33,7 @@
 **（3）RTCDataChannel:**
   数据传输通道，是浏览器之间建立的非媒体的交互连接，通信在浏览器之间直接连接。DataChannel是建立在PeerConnection上的，不能单独使用。
   
-## WebRTC Demo 介绍
+## 二、WebRTC Demo 介绍
 
   通过Demo实现一对一视频通话，使用Google提供的公共STUN服务器获取即将建立TCP连接的IP地址和端口号，使用Scaledrone建立信令。通信流程：两个客户端之间通过自己的公网IP地址，使用STUN协议信息和STUN服务器建立联系；通过SDP提供/应答机制，使用呼叫控制信令消息交换它们已发现的公共IP地址；执行连接检查，确保P2P可以连接；建立连接后，实时通信。
  
@@ -51,7 +51,7 @@
   
   
 ```
-// JavaScript 部分代码
+// Scaledrone 部分代码
 
 // Scaledrone的一个实例建立了一个连接，连接到一个频道
 // CYBEREITS Channel ID ：AIEjzcTbyzUcnOWo
@@ -81,6 +81,7 @@ room.on('members', members => {
  
 - **WebRTC部分：**
   每一个客户端都要完成WebRTC的流程：
+  
 　　获取本地的音频，视频流并添加到MediaStream中，准备发送给对等端。创建一个指定icesever的RTCPeerConnection对象。建立一个icecandidate事件的回调函数，发生该事件时将ICE候选路径消息封装在candidate通过信令通道发送给即将连接的对等端，对等端收到ICE candidate信令之后通过addIceCandidate()将其加入到本端PC实例中。建立一个track事件的响应程序，这个事件会在远程端添加一个track RTCPeerConnection对象到其MediaStream上时被触发，本地获取远程媒体流并显示在页面上。之后通过offer/answer 信令和icecandidate 信令传给对等端。信息交互之后，两端都有自己和对方的SDP信息和网络地址，这样双方就能建立端对端连接，向连接对象添加媒体流，连接对象就能读出媒体流并显示出来。
 
 ``` 
