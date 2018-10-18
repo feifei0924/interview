@@ -13,9 +13,9 @@
 　　**穿越NAT和防火墙的服务器（stun、turn等）：**
 现实网络环境有三种：公共网络：这类网络IP之间可以不受限制地进行互相访问；NAT网络：这类网络主机在私有内网中，没有单独的公网IP( 使用STUN协议解决 )；严格受限的NAT网络：这类网络中的主机在内网内，只能单向访问外网，外网不能直接访问它，需要通过在公共网络上的服务器来进行数据中转( 使用TURN协议解决 )。
   
-　　- STUN ( Session Traversal Utilities for NAT，简单地用UDP穿透NAT) 服务器：用来取外网地址的。
-　　- TURN (使用中继穿透NAT) 服务器：在P2P失败时进行转发的。
-　　- ICE ( Interactive Connectivity Establishment , 即交互式连通建立方式 )：它通过综合利用现有NAT穿透协议，以一种更有效的方式来组织会话建立过程，使之在不增加任何延迟同时比STUN等单一协议更具有健壮性、灵活性。
+- STUN ( Session Traversal Utilities for NAT，简单地用UDP穿透NAT) 服务器：用来取外网地址的。
+- TURN (使用中继穿透NAT) 服务器：在P2P失败时进行转发的。
+- ICE ( Interactive Connectivity Establishment , 即交互式连通建立方式 )：它通过综合利用现有NAT穿透协议，以一种更有效的方式来组织会话建立过程，使之在不增加任何延迟同时比STUN等单一协议更具有健壮性、灵活性。
 
 ### WebRTC提供了三个核心的API：
 
